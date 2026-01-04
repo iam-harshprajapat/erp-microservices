@@ -1,0 +1,38 @@
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# IntelliJ / IDE
+# =========================
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# =========================
+# Maven / Java
+# =========================
+target/
+*.log
+
+# =========================
+# Spring Boot
+# =========================
+logs/
+*.pid
+
+# =========================
+# Environment / Secrets
+# =========================
+.env
+application-dev.yml
+application-qa.yml
+application-prod.yml
+
+# =========================
+# Build tools
+# =========================
+node_modules/
