@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthHealthController {
 
-    private final AuthUserService authUserService;
-
-    public AuthHealthController(AuthUserService authUserService) {
-        this.authUserService = authUserService;
-    }
+//    private final AuthUserService authUserService;
+//
+//    public AuthHealthController(AuthUserService authUserService) {
+//        this.authUserService = authUserService;
+//    }
 //
 //    @GetMapping("/auth/health")
 //    public String health() {

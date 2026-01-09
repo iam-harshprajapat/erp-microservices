@@ -34,5 +34,5 @@ public class AuthUser {
 
 }
 
-enum Role{STUDENT, FACULTY, ADMIN}
-enum Status{ACTIVE,BLOCKED,DISABLED}
+//enum Role{STUDENT, FACULTY, ADMIN}
+//enum Status{ACTIVE,BLOCKED,DISABLED}
