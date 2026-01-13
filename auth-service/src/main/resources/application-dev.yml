@@ -12,6 +12,10 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
+  hikari:
+    initialization-fail-timeout: 60000
+    connection-timeout: 30000
+
   jpa:
     hibernate:
       ddl-auto: update
