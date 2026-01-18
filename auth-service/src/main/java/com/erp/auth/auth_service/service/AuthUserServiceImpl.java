@@ -1,10 +1,12 @@
 package com.erp.auth.auth_service.service;
 
-import com.erp.auth.auth_service.config.SecurityConfig;
+import com.erp.auth.auth_service.dto.LoginRequest;
 import com.erp.auth.auth_service.dto.ProvisionUserRequest;
 import com.erp.auth.auth_service.entity.AuthUser;
+import com.erp.auth.auth_service.exception.InvalidCredentialsException;
+import com.erp.auth.auth_service.exception.UserNotActiveException;
 import com.erp.auth.auth_service.repository.AuthUserRepository;
-import lombok.NoArgsConstructor;
+import com.erp.auth.auth_service.security.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -59,13 +61,29 @@ public class AuthUserServiceImpl implements AuthUserService {
     }
 
 
-//    @Override
-//    public Optional<AuthUser> findByUsername(String username) {
-//        return authUserRepository.findByUsername(username);
-//    }
-//
-//    @Override
-//    public AuthUser save(AuthUser authUser) {
-//        return authUserRepository.save(authUser);
-//    }
+    @Override
+    public Optional<AuthUser> findByUsername(String username) {
+        return authUserRepository.findByUsername(username);
+    }
+
+    @Override
+    public String login(LoginRequest request) {
+
+        AuthUser user = authUserRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new InvalidCredentialsException("Invalid credentials"));
+
+        if (!bCryptPasswordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
+            throw new InvalidCredentialsException("Invalid credentials");
+        }
+
+        if (user.getStatus() != Status.ACTIVE) {
+            throw new UserNotActiveException("User is not active");
+        }
+
+        return JwtUtil.generateToken(
+                user.getUsername(),
+                user.getRole().name()
+        );
+    }
+
 }

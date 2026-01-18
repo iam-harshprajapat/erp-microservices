@@ -30,6 +30,7 @@ logs/
 .env
 application-qa.yml
 application-prod.yml
+application-dev.yml
 
 # =========================
 # Build tools
