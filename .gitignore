@@ -28,9 +28,9 @@ logs/
 # Environment / Secrets
 # =========================
 .env
-application-dev.yml
 application-qa.yml
 application-prod.yml
+application-dev.yml
 
 # =========================
 # Build tools
