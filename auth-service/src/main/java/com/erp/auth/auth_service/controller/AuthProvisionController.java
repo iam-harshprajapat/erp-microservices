@@ -26,14 +26,9 @@ public class AuthProvisionController {
      */
     @PostMapping("/provision")
     public ResponseEntity<ProvisionUserResponse> provisionUser(@RequestBody ProvisionUserRequest request) {
-        String result=null;
-        try{
-             result = authUserService.provisionUser(request);
-        }catch (RuntimeException e){
-            System.out.println(e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new ProvisionUserResponse("User Already Exist"));
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(new ProvisionUserResponse(result));
+         String result=null;
+         result = authUserService.provisionUser(request);
+        return ResponseEntity.status(HttpStatus.OK).body(new ProvisionUserResponse(true,result));
 
     }
 }

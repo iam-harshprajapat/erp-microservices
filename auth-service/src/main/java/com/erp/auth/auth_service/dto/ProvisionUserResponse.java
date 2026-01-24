@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProvisionUserResponse {
-
+    private boolean success;
     private String message;
 
 }

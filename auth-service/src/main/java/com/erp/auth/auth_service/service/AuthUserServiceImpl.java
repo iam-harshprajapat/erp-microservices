@@ -3,7 +3,9 @@ package com.erp.auth.auth_service.service;
 import com.erp.auth.auth_service.dto.LoginRequest;
 import com.erp.auth.auth_service.dto.ProvisionUserRequest;
 import com.erp.auth.auth_service.entity.AuthUser;
+import com.erp.auth.auth_service.exception.IncompleteData;
 import com.erp.auth.auth_service.exception.InvalidCredentialsException;
+import com.erp.auth.auth_service.exception.UserAlreadyExist;
 import com.erp.auth.auth_service.exception.UserNotActiveException;
 import com.erp.auth.auth_service.repository.AuthUserRepository;
 import com.erp.auth.auth_service.security.JwtUtil;
@@ -20,13 +22,15 @@ import java.util.Optional;
 @Service
 public class AuthUserServiceImpl implements AuthUserService {
 
+    private final  JwtUtil jwtUtil;
     private final AuthUserRepository authUserRepository;
     private final  BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public AuthUserServiceImpl(AuthUserRepository authUserRepository,
-                               BCryptPasswordEncoder bCryptPasswordEncoder) {
+                               BCryptPasswordEncoder bCryptPasswordEncoder,JwtUtil jwtUtil) {
         this.authUserRepository = authUserRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.jwtUtil=jwtUtil;
     }
 
     @Override
@@ -35,11 +39,11 @@ public class AuthUserServiceImpl implements AuthUserService {
         if (request.getUsername() == null ||
                 request.getRole() == null ||
                 request.getTempPassword() == null) {
-            throw new RuntimeException("Username, role and temporary password are required");
+            throw new IncompleteData("Username, role and temporary password are required");
         }
 
         if (authUserRepository.findByUsername(request.getUsername()).isPresent()) {
-            throw new RuntimeException("User already provisioned");
+            throw new UserAlreadyExist("User already provisioned");
         }
 
         try{
@@ -69,6 +73,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     @Override
     public String login(LoginRequest request) {
 
+
         AuthUser user = authUserRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new InvalidCredentialsException("Invalid credentials"));
 
@@ -80,7 +85,7 @@ public class AuthUserServiceImpl implements AuthUserService {
             throw new UserNotActiveException("User is not active");
         }
 
-        return JwtUtil.generateToken(
+        return jwtUtil.generateToken(
                 user.getUsername(),
                 user.getRole().name()
         );

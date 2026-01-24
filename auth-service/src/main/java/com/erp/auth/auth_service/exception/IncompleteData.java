@@ -1,7 +1,7 @@
 package com.erp.auth.auth_service.exception;
 
 public class IncompleteData extends RuntimeException{
-    IncompleteData(String msg){
+    public IncompleteData(String msg){
         super(msg);
     }
 }
