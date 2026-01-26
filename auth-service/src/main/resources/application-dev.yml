@@ -4,9 +4,9 @@ server:
 logging:
   level:
     root: INFO
-    org.springframework.web: DEBUG
-    com.zaxxer.hikari: DEBUG
-    org.postgresql: DEBUG
+    org.springframework.web: INFO
+    com.zaxxer.hikari: INFO
+    org.postgresql: INFO
 spring:
   datasource:
     url: ${DB_URL}
