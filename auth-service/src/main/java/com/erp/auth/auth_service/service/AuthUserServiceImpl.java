@@ -1,5 +1,6 @@
 package com.erp.auth.auth_service.service;
 
+import com.erp.auth.auth_service.dto.BulkResponse;
 import com.erp.auth.auth_service.dto.LoginRequest;
 import com.erp.auth.auth_service.dto.ProvisionUserRequest;
 import com.erp.auth.auth_service.entity.AuthUser;
@@ -10,13 +11,30 @@ import com.erp.auth.auth_service.exception.UserNotActiveException;
 import com.erp.auth.auth_service.repository.AuthUserRepository;
 import com.erp.auth.auth_service.security.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.csv.CSVParser;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.erp.auth.auth_service.entity.Role;
 import com.erp.auth.auth_service.entity.Status;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -92,3 +110,4 @@ public class AuthUserServiceImpl implements AuthUserService {
     }
 
 }
+
