@@ -51,6 +51,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             } catch (JwtException e) {
                 // Invalid token → clear context
+                System.out.println("JWT ERROR: " + e.getMessage());
                 SecurityContextHolder.clearContext();
             }
         }
